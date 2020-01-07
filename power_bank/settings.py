@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'course.apps.CourseConfig',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -47,6 +47,7 @@ MIDDLEWARE_CLASSES = (
     # 'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'course.middle_ware.session.SessionMiddleware',
 )
 
 ROOT_URLCONF = 'power_bank.urls'
@@ -95,4 +96,4 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = os.path.join(BASE_DIR, 'power_front', 'dist', 'static')
+STATIC_URL = os.path.join(BASE_DIR, 'power_front', 'dist', 'static') + '/'

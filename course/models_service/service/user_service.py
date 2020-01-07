@@ -13,7 +13,7 @@ def user_exist(user_name):
 
 
 def add_user(name, phone, password):
-    return models_add_user(name, phone=phone, to_md5(password))
+    return models_add_user(name, phone, to_md5(password))
 
 
 def load_user(name, instance4foreign_key=None):

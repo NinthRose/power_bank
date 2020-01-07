@@ -12,25 +12,15 @@ from course.models_service.service.session_service import add_session, remove_se
 from course.models_service.service.user_service import add_user, user_exist, load_user, user_login_update
 
 
+@view_checker('注册用户')
 def create_account(request):
-    if not request.body:
-        html = """
-                    <title>注册邀请码</title>
-                    <form action="/orca/admin/account/createAccount" method="post">
-                        管理员密码：<input type="password" name="password" placeholder="请输入管理员密码"><br><br>
-                        <input type="account" name="account" placeholder="请输入创建用户名"><br><br>
-                        <input type="accountPassword" name="accountPassword" placeholder="请输入创建密码"><br><br>
-                        <input type="submit" value="创建用户">
-                    </form>
-                    """
-        return HttpResponse(html)
-    args = ['password', 'account', 'accountPassword', 'returnJson']
-    password, account, account_password, return_json = request_parser(request, args, is_post=True)
-    password, account, account_password = param_str_checker([password, account, account_password],
-                                                            ['password', 'account', 'accountPassword'])
+    args = ['password', 'account', 'accountPassword', 'phone', 'returnJson']
+    password, account, account_password, phone, return_json = request_parser(request, args, is_post=True)
+    password, account, account_password, phone = param_str_checker([password, account, account_password, phone],
+                                                                   ['password', 'account', 'accountPassword', 'phone'])
     return_json = param_bool_checker(return_json, 'returnJson', False)
     if to_md5(password) == 'cf6e6f5a3c76dc910a7d8b0f98462b68':
-        user = add_user(account, account_password)
+        user = add_user(account, phone, account_password)
         if return_json:
             return success_response('创建用户成功', {'user': user})
         else:

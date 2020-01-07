@@ -20,5 +20,4 @@ class Session(models.Model):
     mtime = models.DateTimeField(auto_now=True)
 
     class Meta:
-        db_table = "session"
-        ordering = ['-ctime']
+        db_table = 'session'

@@ -7,6 +7,8 @@ import traceback
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
 
+from course.common.constants.view_constants import RequestMethod
+
 
 def view_online(view_msg_prefix, request_method=None):
     if not request_method:
