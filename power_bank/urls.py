@@ -34,7 +34,7 @@ pbu = PowerBankUrl()
 
 urlpatterns = [
 
-    url(pbu.admin_url.format('account/createAccount'), account_views.create_account),
+    url(pbu.admin_url.format('account/create'), account_views.create_account),
 
     url(pbu.user_url.format('account/login'), account_views.login),
     url(pbu.user_url.format('account/logout'), account_views.logout),

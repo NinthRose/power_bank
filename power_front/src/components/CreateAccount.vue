@@ -4,6 +4,7 @@
     <form action="/orca/admin/account/createAccount" method="post">
         管理员密码：<input type="password" name="password" placeholder="请输入管理员密码"><br><br>
         <input type="account" name="account" placeholder="请输入创建用户名"><br><br>
+        <input type="phone" name="phone" placeholder="请输入手机号码"><br><br>
         <input type="accountPassword" name="accountPassword" placeholder="请输入创建密码"><br><br>
         <input type="submit" value="创建用户">
     </form>

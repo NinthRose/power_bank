@@ -7,7 +7,9 @@ import traceback
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponse
 
-from course.common.constants.view_constants import RequestMethod
+from course.common.constants.view_constants import RequestMethod, StatusCode
+from course.common.exceptions.orca_exception import PowerBankException
+from course.common.view_service.response_service import failed_response
 
 
 def view_online(view_msg_prefix, request_method=None):
@@ -29,7 +31,7 @@ def view_online(view_msg_prefix, request_method=None):
             try:
                 result = fn(*args, **kwargs)
                 return result
-            except OrcaException as e:
+            except PowerBankException as e:
                 logging.debug(e)
                 return failed_response(str(e))
             except Exception as e:

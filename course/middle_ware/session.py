@@ -2,6 +2,9 @@ import logging
 
 from django.utils.deprecation import MiddlewareMixin
 
+from course.common.view_service.response_service import session_response
+from course.models_service.service.session_service import is_illegal_session
+from course.models_service.service.user_service import load_user
 from power_bank.urls import PowerBankUrl
 
 
@@ -17,8 +20,7 @@ class SessionMiddleware(MiddlewareMixin, PowerBankUrl):
         MiddlewareMixin.__init__(self, get_response)
         PowerBankUrl.__init__(self, 'powerBank/{}')
         urls_ignore = list()
-        urls_ignore.append(self.admin_url.format('account/createCode'))
-        urls_ignore.append(self.admin_url.format('account/createAccount'))
+        urls_ignore.append(self.admin_url.format('account/create'))
         urls_ignore.append(self.user_url.format('account/register'))
         urls_ignore.append(self.user_url.format('account/login'))
         self.urls_ignore = urls_ignore
@@ -56,6 +58,8 @@ class SessionMiddleware(MiddlewareMixin, PowerBankUrl):
 
     def is_ignore_url(self, url):
         url = url.lstrip('/')
+        if not url or url == 'index.html':
+            return True
         if url in self.urls_ignore:
             return True
         for ignore_start in self.urls_ignore_prefix:
