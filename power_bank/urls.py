@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import url
+from django.shortcuts import render
 
 from course.views import account_views
 
@@ -32,6 +33,11 @@ class PowerBankUrl():
 
 pbu = PowerBankUrl()
 
+
+def index(request):
+    return render(request, "index.html")
+
+
 urlpatterns = [
 
     url(pbu.admin_url.format('account/create'), account_views.create_account),
@@ -39,4 +45,5 @@ urlpatterns = [
     url(pbu.user_url.format('account/login'), account_views.login),
     url(pbu.user_url.format('account/logout'), account_views.logout),
     url(pbu.user_url.format('account/info'), account_views.info),
+    url(r'', index)
 ]

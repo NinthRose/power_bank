@@ -27,6 +27,8 @@ class SessionMiddleware(MiddlewareMixin, PowerBankUrl):
 
         urls_ignore_prefix = list()
         urls_ignore_prefix.append('orca/test')
+        urls_ignore_prefix.append('static')
+        urls_ignore_prefix.append('templates')
         self.urls_ignore_prefix = urls_ignore_prefix
 
     def process_request(self, request):
