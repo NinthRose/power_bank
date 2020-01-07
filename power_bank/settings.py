@@ -55,7 +55,7 @@ ROOT_URLCONF = 'power_bank.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'power_front', 'dist', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'power_front', 'dist')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
