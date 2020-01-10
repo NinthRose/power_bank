@@ -38,17 +38,17 @@ class SessionMiddleware(MiddlewareMixin, PowerBankUrl):
             pass
         else:
             session = request.COOKIES.get('session')
-            user = request.COOKIES.get('user')
-            if not session or not user:
+            phone = request.COOKIES.get('phone')
+            if not session or not phone:
                 return session_response("账号未登录,请立即登录")
             if is_illegal_session(session):
-                logging.warning(f"用户{user}下线")
+                logging.warning(f"用户{phone}下线")
                 response = session_response("登录异常,请重新登录")
                 response.cookies.clear()
                 return response
 
-            request.username = user
-            request.user = load_user(user, True)
+            request.user = load_user(phone, True)
+            request.username = request.user.name
 
         return None
 

@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.shortcuts import render
+from django.views.static import serve
 
 from course.views import account_views
+from power_bank.settings import STATIC_ROOT
 
 
 class PowerBankUrl():
@@ -45,5 +47,6 @@ urlpatterns = [
     url(pbu.user_url.format('account/login'), account_views.login),
     url(pbu.user_url.format('account/logout'), account_views.logout),
     url(pbu.user_url.format('account/info'), account_views.info),
-    url(r'', index)
+    url(r'^$', index),
+    url(r'^static/(?P<path>.*)$', serve, {'document_root': STATIC_ROOT}),
 ]

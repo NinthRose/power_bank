@@ -14,39 +14,36 @@ from course.models_service.service.user_service import add_user, user_exist, loa
 
 @view_checker('注册用户')
 def create_account(request):
-    args = ['password', 'account', 'accountPassword', 'phone', 'returnJson']
-    password, account, account_password, phone, return_json = request_parser(request, args, is_post=True)
-    password, account, account_password, phone = param_str_checker([password, account, account_password, phone],
-                                                                   ['password', 'account', 'accountPassword', 'phone'])
+    args = ['key', 'name', 'password', 'phone', 'returnJson']
+    key, name, password, phone, return_json = request_parser(request, args, is_post=True)
+    key, name, password, phone = param_str_checker([key, name, password, phone],
+                                                   ['key', 'name', 'password', 'phone'])
     return_json = param_bool_checker(return_json, 'returnJson', False)
-    if to_md5(password) == 'cf6e6f5a3c76dc910a7d8b0f98462b68':
-        user = add_user(account, phone, account_password)
-        if return_json:
-            return success_response('创建用户成功', {'user': user})
-        else:
-            return HttpResponse('<title>创建用户</title><h3>用户名为：{}，密码为：{}</h3><p><form action="/">'
-                                '<input type="submit" value="返回"></form></p>'.format(account, account_password))
+    # if to_md5(password) == '7301aae0410ec3e3d7182451f8d84eb4':
+    if to_md5(key) == '1f233f9859a982b42034dd17a45f264e':
+        user = add_user(name, phone, password)
+        return success_response('创建用户成功', {'user': user})
     else:
         return HttpResponse('密码错误！')
 
 
 @view_checker('登录')
 def login(request):
-    args = ['userId', 'password']
-    user_id, password = request_parser(request, args, is_post=True)
-    user_id, password = param_str_checker([user_id, password], ['userId', 'password'])
-    if not user_exist(user_id):
+    args = ['phone', 'password']
+    phone, password = request_parser(request, args, is_post=True)
+    phone, password = param_str_checker([phone, password], ['userId', 'password'])
+    if not user_exist(phone):
         return failed_response(u"您未注册，请先注册")
-    user = load_user(user_id)
+    user = load_user(phone)
     if not user['activation']:
         return failed_response(u"账号还未激活，请前往邮箱({})激活账号！".format(user['email']))
     if to_md5(password) != user['password']:
         return failed_response(u"登录失败，用户名或密码错误")
-    logging.info(u"用户{}已登录".format(user_id))
-    user_login_update(user_id)
-    session_id = add_session(user_id)
+    logging.info(u"用户{}已登录".format(phone))
+    user_login_update(phone)
+    session_id = add_session(phone)
     response = success_response('登录成功')
-    response.set_cookie('user', user_id, expires=None)
+    response.set_cookie('phone', phone, expires=None)
     response.set_cookie('session', session_id, expires=None)
     return response
 

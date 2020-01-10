@@ -1,6 +1,14 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
+    <p></p>
+    <router-link to="/createAccount">
+     <button class="btn btn-default">添加用户</button>
+    </router-link>
+    <p></p>
+    <router-link to="/login">
+     <button class="btn btn-default">登录</button>
+    </router-link>
     <router-view/>
   </div>
 </template>
