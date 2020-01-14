@@ -19,7 +19,7 @@ export default {
   name: 'CreateAccount',
   methods: {
     fRegister: function () {
-      const data = { key: this.key, name: this.phone, phone: this.phone, password: this.form.password }
+      const data = { key: this.key, name: this.name, phone: this.phone, password: this.form.password }
       register(data).then((response) => {
         this.info = '注册成功'
       })

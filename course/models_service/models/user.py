@@ -30,6 +30,16 @@ def models_load_user(phone, instance4foreign_key=None):
         return user.to_dict(True)
 
 
+def models_reset_user(phone, name, password):
+    with models_lock:
+        user = User.objects.get(phone=phone)
+        if name:
+            user.name = name
+        if password:
+            user.password = password
+        user.save()
+
+
 def models_update_login(phone):
     with models_lock:
         user = User.objects.get(phone=phone)

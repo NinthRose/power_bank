@@ -26,7 +26,7 @@ def request_parser(request, args: list, is_get=None, is_post=None):
 def params_supporter():
     def decorator(func):
         @functools.wraps(func)
-        def wrapper(*args):
+        def wrapper(*args, **kwargs):
             if not isinstance(args[0], list):
                 return func(*args)
             length = None
@@ -37,7 +37,7 @@ def params_supporter():
                 assert length == len(ps), 'illegal params:the different length params.'
             params = list()
             for ps in zip(*args):
-                params.append(func(*ps))
+                params.append(func(*ps, **kwargs))
             return params
 
         return wrapper
@@ -46,7 +46,7 @@ def params_supporter():
 
 
 @params_supporter()
-def param_str_checker(p, name):
+def param_str_checker(p, name, without_check=None):
     if isinstance(p, int):
         return p
     try:
@@ -54,6 +54,8 @@ def param_str_checker(p, name):
         assert p
         return p
     except:
+        if without_check:
+            return None
         raise PowerBankParamException('{}参数有误：{}'.format(name, p))
 
 

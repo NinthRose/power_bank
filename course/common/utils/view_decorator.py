@@ -1,6 +1,5 @@
 import functools
 import json
-import logging
 import os
 import traceback
 
@@ -32,11 +31,11 @@ def view_online(view_msg_prefix, request_method=None):
                 result = fn(*args, **kwargs)
                 return result
             except PowerBankException as e:
-                logging.debug(e)
+                print('power_bank :', e)
                 return failed_response(str(e))
             except Exception as e:
                 FAILURE_MSG = "失败, {}"
-                logging.error("%s%s, err-msg: %s, traceback: %s" % (
+                print("%s%s, err-msg: %s, traceback: %s" % (
                     view_msg_prefix, FAILURE_MSG, e, traceback.format_exc()))
                 return failed_response(
                     view_msg_prefix + FAILURE_MSG.format(e), result=None)
@@ -54,7 +53,7 @@ def log_pid(_func=None, *, func_name=None):
         @functools.wraps(func)
         def wrapper_log(*args, **kwargs):
             f_name = func_name if func_name else func.__name__
-            logging.debug('call %s in pid: %s' % (f_name, os.getpid()))
+            print('call %s in pid: %s' % (f_name, os.getpid()))
             return func(*args, **kwargs)
 
         return wrapper_log

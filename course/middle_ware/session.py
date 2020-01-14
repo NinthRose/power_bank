@@ -1,5 +1,3 @@
-import logging
-
 from django.utils.deprecation import MiddlewareMixin
 
 from course.common.view_service.response_service import session_response
@@ -21,6 +19,7 @@ class SessionMiddleware(MiddlewareMixin, PowerBankUrl):
         PowerBankUrl.__init__(self, 'powerBank/{}')
         urls_ignore = list()
         urls_ignore.append(self.admin_url.format('account/create'))
+        urls_ignore.append(self.admin_url.format('account/reset'))
         urls_ignore.append(self.user_url.format('account/register'))
         urls_ignore.append(self.user_url.format('account/login'))
         self.urls_ignore = urls_ignore
@@ -42,7 +41,7 @@ class SessionMiddleware(MiddlewareMixin, PowerBankUrl):
             if not session or not phone:
                 return session_response("账号未登录,请立即登录")
             if is_illegal_session(session):
-                logging.warning(f"用户{phone}下线")
+                print(f"用户{phone}下线")
                 response = session_response("登录异常,请重新登录")
                 response.cookies.clear()
                 return response

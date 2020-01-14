@@ -5,9 +5,11 @@
     <router-link to="/createAccount">
      <button class="btn btn-default">添加用户</button>
     </router-link>
-    <p></p>
     <router-link to="/login">
      <button class="btn btn-default">登录</button>
+    </router-link>
+    <router-link to="/resetAccount">
+     <button class="btn btn-default">重置账户</button>
     </router-link>
     <router-view/>
   </div>
