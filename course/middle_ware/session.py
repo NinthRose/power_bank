@@ -46,7 +46,6 @@ class SessionMiddleware(MiddlewareMixin, PowerBankUrl):
                 response = session_response("登录异常,请重新登录")
                 response.cookies.clear()
                 return response
-
             request.user = load_user(phone, True)
             request.username = request.user.name
 

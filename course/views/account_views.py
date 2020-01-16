@@ -21,7 +21,7 @@ def create_account(request):
     key, name, password, phone = param_str_checker([key, name, password, phone], ['key', 'name', 'password', 'phone'],
                                                    [False, False, True, False])
     return_json = param_bool_checker(return_json, 'returnJson', False)
-    if re.match('[0-9]{11,11}', phone):
+    if not re.match('[0-9]{11,11}', phone):
         raise PowerBankParamException('手机号非法：{}'.format(phone))
     if not password:
         password = phone[-4:]
@@ -60,8 +60,6 @@ def login(request):
     if not user_exist(phone):
         return failed_response(u"您未注册，请先注册")
     user = load_user(phone)
-    if not user['activation']:
-        return failed_response(u"账号还未激活，请前往邮箱({})激活账号！".format(user['email']))
     if to_md5(password) != user['password']:
         return failed_response(u"登录失败，用户名或密码错误")
     print(u"用户{}已登录".format(phone))
@@ -84,14 +82,12 @@ def search(request):
     return success_response('搜索用户完成', users)
 
 
-@view_checker('登出', RequestMethod.GET)
+@view_checker('登出')
 def logout(request):
     session = request.COOKIES.get('session')
     request.COOKIES.clear()
     remove_session(session)
-    response = render(request, 'index.html')
-    response.cookies.clear()
-    return response
+    return success_response('用户登出')
 
 
 @view_checker('用户信息')
