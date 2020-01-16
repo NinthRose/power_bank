@@ -8,6 +8,9 @@
     <router-link to="/login">
      <button class="btn btn-default">登录</button>
     </router-link>
+    <router-link to="/searchAccount">
+     <button class="btn btn-default">搜索</button>
+    </router-link>
     <router-link to="/resetAccount">
      <button class="btn btn-default">重置账户</button>
     </router-link>

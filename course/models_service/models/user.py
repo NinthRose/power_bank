@@ -2,6 +2,7 @@ import datetime
 
 from pytz import utc
 
+from course.common.utils.md5 import to_md5
 from course.models import User
 from course.models_service.models_controller import models_lock
 
@@ -36,7 +37,7 @@ def models_reset_user(phone, name, password):
         if name:
             user.name = name
         if password:
-            user.password = password
+            user.password = to_md5(password)
         user.save()
 
 
@@ -45,3 +46,30 @@ def models_update_login(phone):
         user = User.objects.get(phone=phone)
         user.last_login = datetime.datetime.now(utc)
         user.save()
+
+
+def models_search_user(keyword, page_size, page_num):
+    with models_lock:
+        users = User.objects.all()
+        if keyword:
+            users = users.filter(phone__contains=keyword)
+        users = users[page_size * (page_num - 1):page_size * page_num]
+        users = list(users.values('phone', 'name', 'last_login', 'ctime'))
+        for u in users:
+            for key, value in u.items():
+                if isinstance(value, datetime.datetime):
+                    u[key] = str(value)
+        return users
+
+
+def models_page_user(keyword, page_num):
+    with models_lock:
+        users = User.objects.all()
+        if keyword:
+            users = users.filter(phone__contains=keyword)
+        page = users.count() / page_num
+        if page > int(page):
+            page = int(page) + 1
+        else:
+            page = int(page)
+        return page

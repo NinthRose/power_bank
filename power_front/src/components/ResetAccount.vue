@@ -17,15 +17,9 @@ export default {
     fResetAccount: function () {
       const data = { key: this.key, name: this.name, phone: this.phone, password: this.password }
       resetAccount(data).then((response) => {
-        if (response.statusCode === 200) {
-          alert('账户信息重置成功' + response.message)
-        } else {
-          const info = response.$data
-          console.log(response)
-          console.log(response.message)
-          console.log(info)
-          alert(info)
-        }
+        response.json().then((res) => {
+          alert(res.message)
+        })
       })
     }
   }

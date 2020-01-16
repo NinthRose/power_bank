@@ -44,10 +44,12 @@ urlpatterns = [
 
     url(pbu.admin_url.format('account/create'), account_views.create_account),
     url(pbu.admin_url.format('account/reset'), account_views.reset_account),
+    url(pbu.admin_url.format('account/search'), account_views.search),
 
     url(pbu.user_url.format('account/login'), account_views.login),
     url(pbu.user_url.format('account/logout'), account_views.logout),
     url(pbu.user_url.format('account/info'), account_views.info),
+
     url(r'^$', index),
     url(r'^static/(?P<path>.*)$', serve, {'document_root': STATIC_ROOT}),
 ]

@@ -26,7 +26,7 @@ def special_response(message, result=None):
 def create_response(state_code, message, result=None):
     res = {'statusCode': state_code, 'message': message}
     res['data'] = result
-    return HttpResponse(json.dumps(res, ensure_ascii=False, indent=4))
+    return HttpResponse(json.dumps(res, ensure_ascii=False, indent=4), content_type='application/json')
 
 
 def __file_iterator(file_path, chunk_size=512):

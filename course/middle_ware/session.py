@@ -20,6 +20,7 @@ class SessionMiddleware(MiddlewareMixin, PowerBankUrl):
         urls_ignore = list()
         urls_ignore.append(self.admin_url.format('account/create'))
         urls_ignore.append(self.admin_url.format('account/reset'))
+        urls_ignore.append(self.admin_url.format('account/search'))
         urls_ignore.append(self.user_url.format('account/register'))
         urls_ignore.append(self.user_url.format('account/login'))
         self.urls_ignore = urls_ignore
