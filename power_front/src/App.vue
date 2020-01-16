@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <img src="./assets/logo.jpeg">
     <p></p>
     <router-link to="/createAccount">
      <button class="btn btn-default">添加用户</button>
