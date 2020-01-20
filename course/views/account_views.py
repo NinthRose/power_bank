@@ -1,13 +1,10 @@
 import re
 
-from django.shortcuts import render
-
-from course.common.constants.view_constants import RequestMethod
+from course.common.configuration.config_parser import power_config
 from course.common.exceptions.params.param_exception import PowerBankParamException
 from course.common.utils.md5 import to_md5
 from course.common.utils.view_decorator import view_checker
-from course.common.view_service.request_service import request_parser, param_str_checker, param_bool_checker, \
-    param_int_checker
+from course.common.view_service.request_service import request_parser, param_str_checker, param_int_checker
 from course.common.view_service.response_service import failed_response, success_response
 from course.models_service.service.session_service import add_session, remove_session
 from course.models_service.service.user_service import add_user, user_exist, load_user, user_login_update, reset_user, \
@@ -20,13 +17,12 @@ def create_account(request):
     key, name, password, phone, return_json = request_parser(request, args, is_post=True)
     key, name, password, phone = param_str_checker([key, name, password, phone], ['key', 'name', 'password', 'phone'],
                                                    [False, False, True, False])
-    return_json = param_bool_checker(return_json, 'returnJson', False)
     if not re.match('[0-9]{11,11}', phone):
         raise PowerBankParamException('手机号非法：{}'.format(phone))
     if not password:
         password = phone[-4:]
-    # if to_md5(password) == '7301aae0410ec3e3d7182451f8d84eb4':
-    if to_md5(key) == '1f233f9859a982b42034dd17a45f264e':
+    password_md5 = power_config.get_config('config', 'PASSWORD', str)
+    if to_md5(key) == password_md5:
         user = add_user(phone, name, password)
         return success_response('创建用户成功', {'user': user})
     else:
@@ -45,7 +41,8 @@ def reset_account(request):
         name = None
     if not password:
         password = None
-    if to_md5(key) == '1f233f9859a982b42034dd17a45f264e':
+    password_md5 = power_config.get_config('config', 'PASSWORD', str)
+    if to_md5(key) == password_md5:
         user = reset_user(phone, name, password)
         return success_response('重置用户信息成功', {'user': user})
     else:
@@ -76,9 +73,7 @@ def search(request):
     args = ['keyword', 'pageSize', 'pageNum']
     keyword, page_size, page_num = request_parser(request, args, is_post=True)
     page_size, page_num = param_int_checker([page_size, page_num], ['pageSize', 'pageNum'])
-    print(keyword)
     users = search_user(keyword, page_size, page_num)
-    print(users)
     return success_response('搜索用户完成', users)
 
 

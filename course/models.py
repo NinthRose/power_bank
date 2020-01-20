@@ -32,3 +32,11 @@ class Session(models.Model):
 
     class Meta:
         db_table = 'session'
+
+
+class Source(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, db_column='user')
+    stime = models.DateTimeField(null=True)
+    consume = models.BooleanField(default=False)
+    ctime = models.DateTimeField(auto_now_add=True)

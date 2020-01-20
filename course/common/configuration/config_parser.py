@@ -24,6 +24,8 @@ class OrcaConfig():
             return self.config.getboolean(section, option)
         elif issubclass(type, dict):
             return self.config.items(section)
+        elif issubclass(type, str):
+            return self.config.get(section, option)
 
 
-orca_config = OrcaConfig()
+power_config = OrcaConfig()

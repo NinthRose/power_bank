@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.shortcuts import render
 from django.views.static import serve
 
-from course.views import account_views
+from course.views import account_views, source_views
 from power_bank.settings import STATIC_ROOT
 
 
@@ -28,9 +28,11 @@ class PowerBankUrl():
 
         admin_url = orca_prefix.format('admin/{}')
         user_url = orca_prefix.format('user/{}')
+        source_url = user_url.format('source/{}')
 
         self.admin_url = admin_url
         self.user_url = user_url
+        self.source_url = source_url
 
 
 pbu = PowerBankUrl()
@@ -49,6 +51,10 @@ urlpatterns = [
     url(pbu.user_url.format('account/login'), account_views.login),
     url(pbu.user_url.format('account/logout'), account_views.logout),
     url(pbu.user_url.format('account/info'), account_views.info),
+
+    url(pbu.source_url.format('add'), source_views.add),
+    url(pbu.source_url.format('consume'), source_views.consume),
+    url(pbu.source_url.format('statistic'), source_views.statistic),
 
     url(r'^$', index),
     url(r'^static/(?P<path>.*)$', serve, {'document_root': STATIC_ROOT}),

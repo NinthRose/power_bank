@@ -4,6 +4,7 @@ import CreateAccount from '@/components/CreateAccount'
 import Login from '@/components/Login'
 import ResetAccount from '@/components/ResetAccount'
 import SearchAccount from '@/components/SearchAccount'
+import Source from '@/components/Source'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/searchAccount',
       name: 'SearchAccount',
       component: SearchAccount
+    },
+    {
+      path: '/source',
+      name: 'Source',
+      component: Source
     }
   ]
 })

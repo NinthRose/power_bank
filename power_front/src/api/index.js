@@ -52,3 +52,36 @@ export function searchAccount (data) {
     })
   })
 }
+
+export function addSource (data) {
+  return fetch('/powerBank/user/source/add', {
+    method: 'post',
+    credentials: 'include',
+    body: JSON.stringify(data),
+    headers: new Headers({
+      'Content-Type': 'application/json;charset=UTF-8'
+    })
+  })
+}
+
+export function consumeSource (data) {
+  return fetch('/powerBank/user/source/consume', {
+    method: 'post',
+    credentials: 'include',
+    body: JSON.stringify(data),
+    headers: new Headers({
+      'Content-Type': 'application/json;charset=UTF-8'
+    })
+  })
+}
+
+export function statisticSource (data) {
+  return fetch('/powerBank/user/source/statistic', {
+    method: 'post',
+    credentials: 'include',
+    body: JSON.stringify(data),
+    headers: new Headers({
+      'Content-Type': 'application/json;charset=UTF-8'
+    })
+  })
+}

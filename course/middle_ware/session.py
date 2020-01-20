@@ -21,12 +21,13 @@ class SessionMiddleware(MiddlewareMixin, PowerBankUrl):
         urls_ignore.append(self.admin_url.format('account/create'))
         urls_ignore.append(self.admin_url.format('account/reset'))
         urls_ignore.append(self.admin_url.format('account/search'))
-        urls_ignore.append(self.user_url.format('account/register'))
         urls_ignore.append(self.user_url.format('account/login'))
+        urls_ignore.append(self.source_url.format('add'))
+        urls_ignore.append(self.source_url.format('consume'))
+        urls_ignore.append(self.source_url.format('statistic'))
         self.urls_ignore = urls_ignore
 
         urls_ignore_prefix = list()
-        urls_ignore_prefix.append('orca/test')
         urls_ignore_prefix.append('static')
         urls_ignore_prefix.append('templates')
         self.urls_ignore_prefix = urls_ignore_prefix
@@ -39,6 +40,7 @@ class SessionMiddleware(MiddlewareMixin, PowerBankUrl):
         else:
             session = request.COOKIES.get('session')
             phone = request.COOKIES.get('phone')
+            print(session, phone)
             if not session or not phone:
                 return session_response("账号未登录,请立即登录")
             if is_illegal_session(session):
