@@ -1,12 +1,9 @@
 from django.utils.deprecation import MiddlewareMixin
 
 from course.common.view_service.response_service import session_response
-from course.models_service.service.session_service import is_illegal_session
-from course.models_service.service.user_service import load_user
-from power_bank.urls import PowerBankUrl
 
 
-class SessionMiddleware(MiddlewareMixin, PowerBankUrl):
+class SessionMiddleware(MiddlewareMixin):
     """
     MiddlewareMixin 为继承过来的函数，该函数中有两个方法:
     __init__  该方法在项目启动时执行一次，以后在不执行，用于初始化一下信息
@@ -16,16 +13,6 @@ class SessionMiddleware(MiddlewareMixin, PowerBankUrl):
 
     def __init__(self, get_response=None):
         MiddlewareMixin.__init__(self, get_response)
-        PowerBankUrl.__init__(self, 'powerBank/{}')
-        urls_ignore = list()
-        urls_ignore.append(self.admin_url.format('account/create'))
-        urls_ignore.append(self.admin_url.format('account/reset'))
-        urls_ignore.append(self.admin_url.format('account/search'))
-        urls_ignore.append(self.user_url.format('account/login'))
-        urls_ignore.append(self.source_url.format('add'))
-        urls_ignore.append(self.source_url.format('consume'))
-        urls_ignore.append(self.source_url.format('statistic'))
-        self.urls_ignore = urls_ignore
 
         urls_ignore_prefix = list()
         urls_ignore_prefix.append('static')
@@ -39,17 +26,12 @@ class SessionMiddleware(MiddlewareMixin, PowerBankUrl):
             pass
         else:
             session = request.COOKIES.get('session')
-            phone = request.COOKIES.get('phone')
-            print(session, phone)
-            if not session or not phone:
+            if not session:
                 return session_response("账号未登录,请立即登录")
             if is_illegal_session(session):
-                print(f"用户{phone}下线")
                 response = session_response("登录异常,请重新登录")
                 response.cookies.clear()
                 return response
-            request.user = load_user(phone, True)
-            request.username = request.user.name
 
         return None
 
@@ -63,7 +45,7 @@ class SessionMiddleware(MiddlewareMixin, PowerBankUrl):
         url = url.lstrip('/')
         if not url or url == 'index.html':
             return True
-        if url in self.urls_ignore:
+        if url.endswith("login") or url.endswith("logout"):
             return True
         for ignore_start in self.urls_ignore_prefix:
             if str(url).startswith(ignore_start):

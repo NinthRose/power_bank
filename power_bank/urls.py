@@ -17,22 +17,18 @@ from django.conf.urls import url
 from django.shortcuts import render
 from django.views.static import serve
 
-from course.views import account_views, source_views
+from course.views import account_views, lesson_views, student_views
 from power_bank.settings import STATIC_ROOT
 
 
-class PowerBankUrl():
-    def __init__(self, orca_prefix=None):
-        if orca_prefix is None:
-            orca_prefix = r'^powerBank/{}'
+class PowerBankUrl(object):
+    def __init__(self, power_prefix=None):
+        if power_prefix is None:
+            power_prefix = r'^powerBank/{}'
 
-        admin_url = orca_prefix.format('admin/{}')
-        user_url = orca_prefix.format('user/{}')
-        source_url = user_url.format('source/{}')
-
-        self.admin_url = admin_url
-        self.user_url = user_url
-        self.source_url = source_url
+        self.admin_url = power_prefix
+        self.student_url = power_prefix.format('student/{}')
+        self.lesson_url = power_prefix.format('lesson/{}')
 
 
 pbu = PowerBankUrl()
@@ -44,17 +40,17 @@ def index(request):
 
 urlpatterns = [
 
-    url(pbu.admin_url.format('account/create'), account_views.create_account),
-    url(pbu.admin_url.format('account/reset'), account_views.reset_account),
-    url(pbu.admin_url.format('account/search'), account_views.search),
+    url(pbu.admin_url.format('login'), account_views.login),
+    url(pbu.admin_url.format('logout'), account_views.logout),
 
-    url(pbu.user_url.format('account/login'), account_views.login),
-    url(pbu.user_url.format('account/logout'), account_views.logout),
-    url(pbu.user_url.format('account/info'), account_views.info),
+    url(pbu.student_url.format('register'), student_views.register),
+    url(pbu.student_url.format('update'), student_views.update),
+    url(pbu.student_url.format('search'), student_views.search),
 
-    url(pbu.source_url.format('add'), source_views.add),
-    url(pbu.source_url.format('consume'), source_views.consume),
-    url(pbu.source_url.format('statistic'), source_views.statistic),
+    url(pbu.lesson_url.format('add'), lesson_views.add),
+    url(pbu.lesson_url.format('search'), lesson_views.search),
+    url(pbu.lesson_url.format('conduct'), lesson_views.conduct),
+    url(pbu.lesson_url.format('recover'), lesson_views.recover),
 
     url(r'^$', index),
     url(r'^static/(?P<path>.*)$', serve, {'document_root': STATIC_ROOT}),

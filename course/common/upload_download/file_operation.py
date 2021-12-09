@@ -3,11 +3,11 @@ import os
 
 import openpyxl
 
-from orca import data_dir, export_task_dir
+from course import base_dir
 
 
 def write_file(username, data_set, filename, bytes):
-    file_path = os.path.join(data_dir, username, data_set, filename)
+    file_path = os.path.join(base_dir, username, data_set, filename)
     if not os.path.isdir(os.path.dirname(file_path)):
         os.makedirs(os.path.dirname(file_path))
     with open(file_path, 'wb') as f:

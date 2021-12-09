@@ -2,9 +2,9 @@ import threading
 
 from boto.sdb.db import blob
 
-from orca.common.exceptions.upload_download.file_exception import OrcaFileException
-from orca.common.upload_download.file_operation import write_file
-from orca.view_service.request_service import request_parser, param_int_checker, param_str_checker
+from course.common.exceptions.upload_download.file_exception import OrcaFileException
+from course.common.upload_download.file_operation import write_file
+from course.common.view_service.request_service import request_parser, param_int_checker, param_str_checker
 
 _dict_rlock = threading.RLock()
 with _dict_rlock:

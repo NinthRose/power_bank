@@ -1,27 +1,5 @@
-export function register (data) {
-  return fetch('/powerBank/admin/account/create', {
-    method: 'post',
-    credentials: 'include',
-    body: JSON.stringify(data),
-    headers: new Headers({
-      'Content-Type': 'application/json;charset=UTF-8'
-    })
-  })
-}
-
-export function resetAccount (data) {
-  return fetch('/powerBank/admin/account/reset', {
-    method: 'post',
-    credentials: 'include',
-    body: JSON.stringify(data),
-    headers: new Headers({
-      'Content-Type': 'application/json;charset=UTF-8'
-    })
-  })
-}
-
 export function login (data) {
-  return fetch('/powerBank/user/account/login', {
+  return fetch('/powerBank/login', {
     method: 'post',
     credentials: 'include',
     body: JSON.stringify(data),
@@ -32,7 +10,7 @@ export function login (data) {
 }
 
 export function logout (data) {
-  return fetch('/powerBank/user/account/logout', {
+  return fetch('/powerBank/logout', {
     method: 'post',
     credentials: 'include',
     body: JSON.stringify(data),
@@ -42,8 +20,8 @@ export function logout (data) {
   })
 }
 
-export function searchAccount (data) {
-  return fetch('/powerBank/admin/account/search', {
+export function register (data) {
+  return fetch('/powerBank/student/register', {
     method: 'post',
     credentials: 'include',
     body: JSON.stringify(data),
@@ -53,8 +31,8 @@ export function searchAccount (data) {
   })
 }
 
-export function addSource (data) {
-  return fetch('/powerBank/user/source/add', {
+export function searchStudent (data) {
+  return fetch('/powerBank/student/search', {
     method: 'post',
     credentials: 'include',
     body: JSON.stringify(data),
@@ -64,8 +42,8 @@ export function addSource (data) {
   })
 }
 
-export function consumeSource (data) {
-  return fetch('/powerBank/user/source/consume', {
+export function updateStudent (data) {
+  return fetch('/powerBank/student/update', {
     method: 'post',
     credentials: 'include',
     body: JSON.stringify(data),
@@ -75,8 +53,41 @@ export function consumeSource (data) {
   })
 }
 
-export function statisticSource (data) {
-  return fetch('/powerBank/user/source/statistic', {
+export function addLesson (data) {
+  return fetch('/powerBank/lesson/add', {
+    method: 'post',
+    credentials: 'include',
+    body: JSON.stringify(data),
+    headers: new Headers({
+      'Content-Type': 'application/json;charset=UTF-8'
+    })
+  })
+}
+
+export function searchLesson (data) {
+  return fetch('/powerBank/lesson/search', {
+    method: 'post',
+    credentials: 'include',
+    body: JSON.stringify(data),
+    headers: new Headers({
+      'Content-Type': 'application/json;charset=UTF-8'
+    })
+  })
+}
+
+export function conductLesson (data) {
+  return fetch('/powerBank/lesson/conduct', {
+    method: 'post',
+    credentials: 'include',
+    body: JSON.stringify(data),
+    headers: new Headers({
+      'Content-Type': 'application/json;charset=UTF-8'
+    })
+  })
+}
+
+export function recoverLesson (data) {
+  return fetch('/powerBank/lesson/recover', {
     method: 'post',
     credentials: 'include',
     body: JSON.stringify(data),

@@ -1,8 +1,8 @@
 {
-  "name": "power_front",
+  "name": "power_web",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "zhangyaqi",
+  "author": "zyq <563906875@qq.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -14,11 +14,8 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "element-ui": "^2.13.0",
     "vue": "^2.5.2",
-    "vue-resource": "^1.5.1",
-    "vue-router": "^3.0.1",
-    "vuex": "^3.1.2"
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -36,7 +33,7 @@
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.22.0",
     "chalk": "^2.0.1",
-    "chromedriver": "^2.27.2",
+    "chromedriver": "^90.0",
     "copy-webpack-plugin": "^4.0.1",
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.28.0",

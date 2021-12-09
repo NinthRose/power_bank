@@ -1,4 +1,4 @@
-# power_front
+# power_web
 
 > A Vue.js project
 
