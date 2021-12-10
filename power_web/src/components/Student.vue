@@ -1,31 +1,30 @@
 <template>
-  <div class="create_student">
-    用户名：<input type="text" name="name" placeholder="请输入创建用户名" v-model="name"><br><br>
-    手机号：<input type="text" name="phone" placeholder="请输入手机号码" v-model="phone"><br><br>
+  <div class="student">
+    <power-menu/>
+    用户名：<input type="text" name="name" placeholder="请输入创建用户名" v-model="name">
+    手机号：<input type="text" name="phone" placeholder="请输入手机号码" v-model="phone">
     <button @click="fRegister">创建用户</button>
-    <p></p>
-    手机号：<input type="text" name="phone" placeholder="手机号码模糊查询" v-model="phone"><br><br>
-    <p>{{num}}</p>
+    手机号：<input type="text" name="phone" placeholder="手机号码模糊查询" v-model="phone">
     <button @click="fSearchAccount(0)">搜索账户</button>
+    <br/>
     <button @click="fSearchAccount(-1)">上一页</button>
     <button @click="fSearchAccount(1)">下一页</button>
     <table frame="hsides" id="users" align="center">
-    <tr>
-      <th>id</th>
-      <th>姓名</th>
-      <th>手机号</th>
-      <th>加入时间</th>
-      <th>上次上课时间</th>
-    </tr>
-</table>
+      <tr>
+        <th>id</th> <th>姓名</th> <th>手机号</th> <th>加入时间</th> <th>上次上课时间</th>
+      </tr>
+    </table>
+    <p>{{num}}</p>
   </div>
 </template>
 
 <script>
 import { register, searchStudent } from '../api/index'
+import PowerMenu from './PowerMenu'
 
 export default {
-  name: 'SearchStudent',
+  name: 'Student',
+  components: { PowerMenu },
   data () {
     return {
       num: 1,

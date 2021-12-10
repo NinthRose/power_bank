@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login'
-import Logout from '@/components/Logout'
 import Student from '@/components/Student'
-import Source from '@/components/Source'
+import Lesson from '@/components/Lesson'
+import PowerMenu from '@/components/PowerMenu'
 
 Vue.use(Router)
 
@@ -15,19 +15,19 @@ export default new Router({
       component: Login
     },
     {
-      path: '/logout',
-      name: 'Logout',
-      component: Logout
-    },
-    {
       path: '/student',
       name: 'Student',
       component: Student
     },
     {
-      path: '/source',
-      name: 'Source',
-      component: Source
+      path: '/lesson',
+      name: 'Lesson',
+      component: Lesson
+    },
+    {
+      path: '/powerMenu',
+      name: 'PowerMenu',
+      component: PowerMenu
     }
   ]
 })
