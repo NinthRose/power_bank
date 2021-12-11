@@ -1,6 +1,7 @@
 from django.utils.deprecation import MiddlewareMixin
 
 from course.common.view_service.response_service import session_response
+from course.models_service.service.session_service import is_session_effective
 
 
 class SessionMiddleware(MiddlewareMixin):
@@ -28,11 +29,10 @@ class SessionMiddleware(MiddlewareMixin):
             session = request.COOKIES.get('session')
             if not session:
                 return session_response("账号未登录,请立即登录")
-            if is_illegal_session(session):
+            if not is_session_effective():
                 response = session_response("登录异常,请重新登录")
                 response.cookies.clear()
                 return response
-
         return None
 
     def process_response(self, request, response):
@@ -45,7 +45,7 @@ class SessionMiddleware(MiddlewareMixin):
         url = url.lstrip('/')
         if not url or url == 'index.html':
             return True
-        if url.endswith("login") or url.endswith("logout"):
+        if url.endswith("login") or url.endswith("logout") or url.endswith("favicon.ico"):
             return True
         for ignore_start in self.urls_ignore_prefix:
             if str(url).startswith(ignore_start):

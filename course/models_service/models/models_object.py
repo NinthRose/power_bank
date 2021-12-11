@@ -1,5 +1,6 @@
 import json
 import os
+import threading
 import time
 
 from course.models_service.models.models import PowerData
@@ -18,9 +19,9 @@ def get_latest():
                 if max is None or clock > max:
                     max = clock
                     latest_file = file
-    if latest_file is None:
-        return None
     pd = PowerData()
+    if latest_file is None:
+        return pd
     with open(os.path.join(data_dir, latest_file)) as input:
         pd.__dict__.update(json.load(input))
         return pd
@@ -31,6 +32,10 @@ def dumps(obj):
     json_path = os.path.join(data_dir, now + JSON_SUFFIX)
     with open(json_path, 'w') as output:
         json.dump(obj, output, default=lambda obj: obj.__dict__, ensure_ascii=False)
+
+
+model_lock = threading.RLock()
+pd = get_latest()
 
 # # test
 # latest = get_latest()

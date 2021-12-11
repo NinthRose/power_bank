@@ -1,6 +1,5 @@
 <template>
   <div class="lesson">
-    <power-menu/>
     用户名：<input type="text" name="name" placeholder="请输入创建用户名" v-model="name"><br><br>
     手机号：<input type="text" name="phone" placeholder="请输入手机号码" v-model="phone"><br><br>
     <button @click="fRegister">创建用户</button>
@@ -20,11 +19,9 @@
 
 <script>
 import { register, searchStudent } from '../api/index'
-import PowerMenu from './PowerMenu.vue'
 
 export default {
   name: 'Lesson',
-  components: { PowerMenu },
   data () {
     return {
       num: 1,

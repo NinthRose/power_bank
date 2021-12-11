@@ -8,6 +8,7 @@ class MyClock(object):
         super().__init__()
         self.cclock = time.time()
         self.uclock = time.time()
+        self.session = None
 
     def update(self):
         self.uclock = time.time()
@@ -17,6 +18,18 @@ class MyClock(object):
 
     def get_utime(self):
         return datetime.datetime.fromtimestamp(self.uclock)
+
+    def update_session(self):
+        self.session = time.time()
+        return self.session
+
+    def get_session(self, timeout):
+        if self.session is None or time.time() - self.session > timeout:
+            self.session = None
+        return self.session
+
+    def clear_session(self):
+        self.session = None
 
 
 class PowerData(MyClock):

@@ -13,21 +13,17 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
-    },
-    {
-      path: '/student',
-      name: 'Student',
-      component: Student
-    },
-    {
-      path: '/lesson',
-      name: 'Lesson',
-      component: Lesson
-    },
-    {
+    }, {
       path: '/powerMenu',
       name: 'PowerMenu',
-      component: PowerMenu
+      component: PowerMenu,
+      children: [{
+        path: '/student',
+        component: Student
+      }, {
+        path: '/lesson',
+        component: Lesson
+      }]
     }
   ]
 })
