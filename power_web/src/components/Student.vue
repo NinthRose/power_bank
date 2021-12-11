@@ -4,10 +4,10 @@
     手机号：<input type="text" name="phone" placeholder="请输入手机号码" v-model="phone">
     <button @click="fRegister">创建用户</button>
     手机号：<input type="text" name="phone" placeholder="手机号码模糊查询" v-model="phone">
-    <button @click="fSearchAccount(0)">搜索账户</button>
+    <button @click="fSearchStudent(0)">搜索账户</button>
     <br/>
-    <button @click="fSearchAccount(-1)">上一页</button>
-    <button @click="fSearchAccount(1)">下一页</button>
+    <button @click="fSearchStudent(-1)">上一页</button>
+    <button @click="fSearchStudent(1)">下一页</button>
     <table frame="hsides" id="users" align="center">
       <tr>
         <th>id</th> <th>姓名</th> <th>手机号</th> <th>加入时间</th> <th>上次上课时间</th>
@@ -30,16 +30,14 @@ export default {
   },
   methods: {
     fRegister: function () {
-      if (this.name === '' || this.phone === '' || length(this.phone) === 0) {
+      if (this.name === '' || this.phone === '' || this.phone.length !== 11) {
         alert('输入内容有误')
         return
       }
       const data = { name: this.name, phone: this.phone }
       register(data).then((response) => {
         response.json().then((res) => {
-          if (res.statusCode === 200) {
-            alert(res.data.msg)
-          }
+          alert(res.message)
         })
       })
     },
@@ -54,12 +52,16 @@ export default {
       searchStudent(data).then((response) => {
         response.json().then((res) => {
           if (res.statusCode === 200) {
-            var users = res.data.page
+            var users = res.data
             var userTable = document.getElementById('users')
             for (var i = 0; i < this.students; i++) {
               userTable.deleteRow(-1)
             }
             this.students = 0
+            if (users.length === 0) {
+              alert('该页内容为空')
+              return
+            }
             for (var u of users) {
               var line = userTable.insertRow(-1)
               var name = line.insertCell(-1)

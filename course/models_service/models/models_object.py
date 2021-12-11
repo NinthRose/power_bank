@@ -3,10 +3,32 @@ import os
 import threading
 import time
 
-from course.models_service.models.models import PowerData
+from course.models_service.models.models import PowerData, Lesson, Student
 from data import data_dir
 
 JSON_SUFFIX = ".json"
+
+PD = PowerData()
+
+
+def dict2power(d):
+    key_students = 'students'
+    key_lessons = 'lessons'
+    if key_students in d:
+        PD.__dict__.update(d)
+        return PD
+    # student
+    if key_lessons in d:
+        s = Student(d['name'], d['phone'])
+        s.__dict__.update(d)
+        lessons = d.pop(key_lessons)
+        s.lessons = list()
+        for lesson in lessons:
+            l = Lesson(d['phone'])
+            l.__dict__.update(lesson)
+            s.lessons.append(l)
+        return s
+    return d
 
 
 def get_latest():
@@ -19,12 +41,10 @@ def get_latest():
                 if max is None or clock > max:
                     max = clock
                     latest_file = file
-    pd = PowerData()
     if latest_file is None:
-        return pd
+        return PD
     with open(os.path.join(data_dir, latest_file)) as input:
-        pd.__dict__.update(json.load(input))
-        return pd
+        return json.load(input, object_hook=dict2power)
 
 
 def dumps(obj):
@@ -34,8 +54,16 @@ def dumps(obj):
         json.dump(obj, output, default=lambda obj: obj.__dict__, ensure_ascii=False)
 
 
+def dumps2json(obj):
+    return json.dumps(obj, default=lambda obj: obj.__dict__, ensure_ascii=False)
+
+
+def dumps2basic(obj):
+    return json.loads(json.dumps(obj, default=lambda obj: obj.__dict__, ensure_ascii=False))
+
+
 model_lock = threading.RLock()
-pd = get_latest()
+get_latest()
 
 # # test
 # latest = get_latest()

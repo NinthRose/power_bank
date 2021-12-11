@@ -19,17 +19,7 @@ class MyClock(object):
     def get_utime(self):
         return datetime.datetime.fromtimestamp(self.uclock)
 
-    def update_session(self):
-        self.session = time.time()
-        return self.session
 
-    def get_session(self, timeout):
-        if self.session is None or time.time() - self.session > timeout:
-            self.session = None
-        return self.session
-
-    def clear_session(self):
-        self.session = None
 
 
 class PowerData(MyClock):
@@ -51,6 +41,24 @@ class PowerData(MyClock):
             return self.students[phone]
         except KeyError:
             return None
+
+    def search_students(self, keyword):
+        phones = self.students.keys()
+        if keyword:
+            phones = [p for p in phones if keyword in p]
+        return [self.students.get(p) for p in phones]
+
+    def update_session(self):
+        self.session = time.time()
+        return self.session
+
+    def get_session(self, timeout):
+        if self.session is None or time.time() - self.session > timeout:
+            self.session = None
+        return self.session
+
+    def clear_session(self):
+        self.session = None
 
 
 class Student(MyClock):

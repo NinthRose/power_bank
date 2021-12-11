@@ -4,6 +4,7 @@ from course.common.exceptions.params.param_exception import PowerBankParamExcept
 from course.common.utils.view_decorator import view_checker
 from course.common.view_service.request_service import request_parser, param_str_checker, param_int_checker
 from course.common.view_service.response_service import success_response, failed_response
+from course.models_service.service.student_service import register_student, search_student
 
 
 @view_checker('注册用户')
@@ -15,7 +16,8 @@ def register(request):
         raise PowerBankParamException('手机号非法：{}'.format(phone))
     if not name:
         name = phone[-4:]
-    user = add_student(phone, name)
+
+    user = register_student(name, phone)
     return success_response('创建用户成功', {'user': user})
 
 
