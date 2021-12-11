@@ -54,4 +54,5 @@ urlpatterns = [
 
     url(r'^$', index),
     url(r'^static/(?P<path>.*)$', serve, {'document_root': STATIC_ROOT}),
+
 ]

@@ -17,11 +17,6 @@ import { login, logout } from '../api/index'
 
 export default {
   name: 'Login',
-  data () {
-    return {
-      password: ''
-    }
-  },
   methods: {
     fLogin: function () {
       const data = { password: this.password }
