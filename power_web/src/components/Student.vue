@@ -9,9 +9,11 @@
     <br/>
     <button @click="fSearchStudent(-1)">上一页</button>
     <button @click="fSearchStudent(1)">下一页</button>
+    搜索结果：{{res_num}}条，当页结果：{{students}}条
+    <br/>
     <table frame="hsides" id="users" align="center">
       <tr>
-        <th>姓名</th> <th>手机号</th> <th>加入时间</th> <th>上次上课时间</th>
+        <th>姓名</th> <th>手机号</th> <th>加入时间</th> <th>上次上课时间</th> <th>所有课程</th> <th>剩余课程</th>
       </tr>
     </table>
     <p>{{num}}</p>
@@ -26,7 +28,8 @@ export default {
   data () {
     return {
       num: 1,
-      students: 0
+      students: 0,
+      res_num: 0
     }
   },
   methods: {
@@ -53,26 +56,39 @@ export default {
       searchStudent(data).then((response) => {
         response.json().then((res) => {
           if (res.statusCode === 200) {
-            var users = res.data
+            this.res_num = res.data.num
+            var users = res.data.users
             var userTable = document.getElementById('users')
+            if (users.length === 0) {
+              if (this.res_num === 0) {
+                alert('查不到相关信息')
+              } else if (offset === 0) {
+                this.num = 1
+                searchStudent(0)
+              } else {
+                alert('该页内容为空')
+                this.num -= 1
+              }
+              return
+            }
             for (var i = 0; i < this.students; i++) {
               userTable.deleteRow(-1)
             }
             this.students = 0
-            if (users.length === 0) {
-              alert('该页内容为空')
-              return
-            }
             for (var u of users) {
               var line = userTable.insertRow(-1)
               var name = line.insertCell(-1)
               var phone = line.insertCell(-1)
               var ctime = line.insertCell(-1)
               var last = line.insertCell(-1)
+              var all = line.insertCell(-1)
+              var rest = line.insertCell(-1)
               name.innerHTML = u.name
               phone.innerHTML = u.phone
               ctime.innerHTML = u.ctime
               last.innerHTML = u.utime
+              all.innerHTML = u.all
+              rest.innerHTML = u.rest
               console.log(u)
               this.students += 1
             }

@@ -35,5 +35,5 @@ def search(request):
     args = ['keyword', 'pageSize', 'pageNum']
     keyword, page_size, page_num = request_parser(request, args, is_post=True)
     page_size, page_num = param_int_checker([page_size, page_num], ['pageSize', 'pageNum'])
-    users = search_student(keyword, page_size, page_num)
-    return success_response('搜索用户完成', users)
+    num, users = search_student(keyword, page_size, page_num)
+    return success_response('搜索用户完成', {'num': num, 'users': users})

@@ -44,7 +44,9 @@ class PowerData(MyClock):
         phones = self.students.keys()
         if keyword:
             phones = [p for p in phones if keyword in p]
-        return [self.students.get(p) for p in phones]
+        res = [self.students.get(p) for p in phones]
+        res.reverse()
+        return res
 
     def update_session(self):
         self.session = time.time()
@@ -85,6 +87,7 @@ class Student(MyClock):
     def recover(self, num):
         if num >= self.rest or num <= 0:
             raise Exception("no more lessons: only rest {} lessons, recover {}".format(self.rest, num))
+        self.all -= num
         self.rest -= num
         self.operate(num, recover=True)
 

@@ -24,8 +24,8 @@ export default {
         response.json().then((res) => {
           if (res.statusCode !== 200) {
             this.$router.push('/login')
+            alert(res.message)
           }
-          alert(res.message)
         })
       })
     },
@@ -33,7 +33,9 @@ export default {
       const data = { }
       logout(data).then((response) => {
         response.json().then((res) => {
-          alert(res.message)
+          if (res.statusCode !== 200) {
+            alert(res.message)
+          }
         })
       })
     }
