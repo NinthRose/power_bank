@@ -1,7 +1,7 @@
 from django.utils.deprecation import MiddlewareMixin
 
 from course.common.view_service.response_service import session_response
-from course.models_service.models.models_object import model_lock, PD, dumps
+from course.models_service.models.models_object import model_lock, dumps_pd
 from course.models_service.service.session_service import is_session_effective
 
 
@@ -38,7 +38,7 @@ class SessionMiddleware(MiddlewareMixin):
 
     def process_response(self, request, response):
         with model_lock:
-            dumps(PD)
+            dumps_pd()
         return response
 
     def process_exception(self, response, exception):

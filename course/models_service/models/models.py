@@ -20,8 +20,6 @@ class MyClock(object):
         return datetime.datetime.fromtimestamp(self.uclock)
 
 
-
-
 class PowerData(MyClock):
 
     def __init__(self):

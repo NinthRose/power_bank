@@ -47,11 +47,12 @@ def get_latest():
         return json.load(input, object_hook=dict2power)
 
 
-def dumps(obj):
-    now = str(time.time())
-    json_path = os.path.join(data_dir, now + JSON_SUFFIX)
-    with open(json_path, 'w') as output:
-        json.dump(obj, output, default=lambda obj: obj.__dict__, ensure_ascii=False)
+def dumps_pd():
+    with model_lock:
+        now = str(time.time())
+        json_path = os.path.join(data_dir, now + JSON_SUFFIX)
+        with open(json_path, 'w') as output:
+            json.dump(PD, output, default=lambda o: o.__dict__, ensure_ascii=False)
 
 
 def dumps2json(obj):

@@ -3,14 +3,15 @@
     用户名：<input type="text" name="name" placeholder="请输入创建用户名" v-model="name">
     手机号：<input type="text" name="phone" placeholder="请输入手机号码" v-model="phone">
     <button @click="fRegister">创建用户</button>
-    手机号：<input type="text" name="phone" placeholder="手机号码模糊查询" v-model="phone">
+    手机号：<input type="text" name="keyword" placeholder="手机号码模糊查询" v-model="keyword">
     <button @click="fSearchStudent(0)">搜索账户</button>
+    <br/>
     <br/>
     <button @click="fSearchStudent(-1)">上一页</button>
     <button @click="fSearchStudent(1)">下一页</button>
     <table frame="hsides" id="users" align="center">
       <tr>
-        <th>id</th> <th>姓名</th> <th>手机号</th> <th>加入时间</th> <th>上次上课时间</th>
+        <th>姓名</th> <th>手机号</th> <th>加入时间</th> <th>上次上课时间</th>
       </tr>
     </table>
     <p>{{num}}</p>
@@ -48,7 +49,7 @@ export default {
         this.num = 1
         return
       }
-      const data = { keyword: this.phone, pageSize: 10, pageNum: this.num }
+      const data = { keyword: this.keyword, pageSize: 10, pageNum: this.num }
       searchStudent(data).then((response) => {
         response.json().then((res) => {
           if (res.statusCode === 200) {
