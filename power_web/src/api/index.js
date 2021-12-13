@@ -75,19 +75,8 @@ export function searchLesson (data) {
   })
 }
 
-export function conductLesson (data) {
-  return fetch('/powerBank/lesson/conduct', {
-    method: 'post',
-    credentials: 'include',
-    body: JSON.stringify(data),
-    headers: new Headers({
-      'Content-Type': 'application/json;charset=UTF-8'
-    })
-  })
-}
-
-export function recoverLesson (data) {
-  return fetch('/powerBank/lesson/recover', {
+export function updateLesson (data) {
+  return fetch('/powerBank/lesson/update', {
     method: 'post',
     credentials: 'include',
     body: JSON.stringify(data),

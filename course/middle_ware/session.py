@@ -3,6 +3,7 @@ from django.utils.deprecation import MiddlewareMixin
 from course.common.view_service.response_service import session_response
 from course.models_service.models.models_object import model_lock, dumps_pd
 from course.models_service.service.session_service import is_session_effective
+from power_bank.urls import PowerBankUrl
 
 
 class SessionMiddleware(MiddlewareMixin):
@@ -15,30 +16,33 @@ class SessionMiddleware(MiddlewareMixin):
 
     def __init__(self, get_response=None):
         MiddlewareMixin.__init__(self, get_response)
+        self.url = PowerBankUrl('powerBank/{}')
 
         urls_ignore_prefix = list()
         urls_ignore_prefix.append('static')
         urls_ignore_prefix.append('templates')
         self.urls_ignore_prefix = urls_ignore_prefix
+        self.ignore = False
 
     def process_request(self, request):
         path = request.path
         # access_token = request.META.get('HTTP_PRIVATE_TOKEN', None)
+        self.ignore = False
         if self.is_ignore_url(path):
-            pass
-        else:
-            session = request.COOKIES.get('session')
-            if not session:
-                return session_response("账号未登录,请立即登录")
-            if not is_session_effective():
-                response = session_response("登录异常,请重新登录")
-                response.cookies.clear()
-                return response
-        return None
+            self.ignore = True
+            return
+        session = request.COOKIES.get('session')
+        if not session:
+            return session_response("账号未登录,请立即登录")
+        if not is_session_effective():
+            response = session_response("登录异常,请重新登录")
+            response.cookies.clear()
+            return response
 
     def process_response(self, request, response):
-        with model_lock:
-            dumps_pd()
+        if not self.ignore:
+            with model_lock:
+                dumps_pd()
         return response
 
     def process_exception(self, response, exception):

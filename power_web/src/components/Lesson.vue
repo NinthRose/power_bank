@@ -1,12 +1,36 @@
 <template>
   <div class="lesson">
-    <p>快马加鞭制作中，敬请期待。联系人：你爸爸</p>
+    <input type="text" name="phone" placeholder="请输入手机号" v-model="phone">
+    <input type="number" name="num" v-model="num" min="1" max="1000">
+    <button @click="add">买课</button>
+    <button @click="update(true)">退课</button>
+    <button @click="update(false)">上课</button>
+
   </div>
 </template>
 
 <script>
+import { addLesson, updateLesson } from '../api/index'
 export default {
-  name: 'Lesson'
+  name: 'Lesson',
+  methods: {
+    add: function () {
+      const data = {phone: this.phone, num: this.num}
+      addLesson(data).then((response) => {
+        response.json().then((res) => {
+          alert(res.message)
+        })
+      })
+    },
+    update: function (refund) {
+      const data = {phone: this.phone, num: this.num, refund: refund}
+      updateLesson(data).then((response) => {
+        response.json().then((res) => {
+          alert(res.message)
+        })
+      })
+    }
+  }
 }
 </script>
 
