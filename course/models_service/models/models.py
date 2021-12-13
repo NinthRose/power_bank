@@ -67,6 +67,7 @@ class Student(MyClock):
                     lesson.conduct = True
                 if recover:
                     lesson.refund = True
+                lesson.update()
                 num -= 1
 
 
