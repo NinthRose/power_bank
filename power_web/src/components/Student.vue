@@ -15,7 +15,7 @@
     <br/>
     <table frame="hsides" id="users" align="center">
       <tr>
-        <th>姓名</th> <th>手机号</th> <th>加入时间</th> <th>上次上课时间</th> <th>所有课程</th> <th>剩余课程</th> <th>备注</th>
+        <th>姓名</th> <th>手机号</th> <th>加入时间</th> <th>上次上课时间</th> <th>所有课程(私教课/正课/复习课)</th> <th>剩余课程(私教课/正课/复习课)</th> <th>备注</th>
       </tr>
     </table>
     <p>{{num}}</p>

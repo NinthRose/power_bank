@@ -24,7 +24,7 @@ def dict2power(d):
         lessons = d.pop(key_lessons)
         s.lessons = list()
         for lesson in lessons:
-            l = Lesson(d['phone'])
+            l = Lesson(lesson['phone'], lesson['lesson_type'])
             l.__dict__.update(lesson)
             s.lessons.append(l)
         return s

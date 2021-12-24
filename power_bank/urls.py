@@ -49,6 +49,7 @@ urlpatterns = [
 
     url(pbu.lesson_url.format('add'), lesson_views.add),
     url(pbu.lesson_url.format('update'), lesson_views.update),
+    url(pbu.lesson_url.format('search'), lesson_views.search),
 
     url(r'^$', index),
     url(r'^static/(?P<path>.*)$', serve, {'document_root': STATIC_ROOT}),
