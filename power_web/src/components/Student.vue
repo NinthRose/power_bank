@@ -2,8 +2,10 @@
   <div class="student">
     用户名：<input type="text" name="name" placeholder="请输入创建用户名" v-model="name">
     手机号：<input type="text" name="phone" placeholder="请输入手机号码" v-model="phone">
+    备注：<input type="text" name="comment" placeholder="请输入备注信息" v-model="comment">
     <button @click="fRegister">创建用户</button>
-    手机号：<input type="text" name="keyword" placeholder="手机号码模糊查询" v-model="keyword">
+    <button @click="fUpdate">更新用户信息</button>
+    手机号：<input type="text" name="keyword" placeholder="手机号码/姓名模糊查询" v-model="keyword">
     <button @click="fSearchStudent(0)">搜索账户</button>
     <br/>
     <br/>
@@ -13,7 +15,7 @@
     <br/>
     <table frame="hsides" id="users" align="center">
       <tr>
-        <th>姓名</th> <th>手机号</th> <th>加入时间</th> <th>上次上课时间</th> <th>所有课程</th> <th>剩余课程</th>
+        <th>姓名</th> <th>手机号</th> <th>加入时间</th> <th>上次上课时间</th> <th>所有课程</th> <th>剩余课程</th> <th>备注</th>
       </tr>
     </table>
     <p>{{num}}</p>
@@ -21,7 +23,7 @@
 </template>
 
 <script>
-import { register, searchStudent } from '../api/index'
+import { register, searchStudent, updateStudent } from '../api/index'
 
 export default {
   name: 'Student',
@@ -34,12 +36,24 @@ export default {
   },
   methods: {
     fRegister: function () {
-      if (this.name === '' || this.phone === '' || this.phone.length !== 11) {
+      if (this.phone === '' || this.phone.length !== 11) {
         alert('输入内容有误')
         return
       }
-      const data = { name: this.name, phone: this.phone }
+      const data = { name: this.name, phone: this.phone, comment: this.comment }
       register(data).then((response) => {
+        response.json().then((res) => {
+          alert(res.message)
+        })
+      })
+    },
+    fUpdate: function () {
+      if (this.phone === '' || this.phone.length !== 11) {
+        alert('输入内容有误')
+        return
+      }
+      const data = { name: this.name, phone: this.phone, comment: this.comment }
+      updateStudent(data).then((response) => {
         response.json().then((res) => {
           alert(res.message)
         })
@@ -83,13 +97,15 @@ export default {
               var last = line.insertCell(-1)
               var all = line.insertCell(-1)
               var rest = line.insertCell(-1)
+              var comment = line.insertCell(-1)
               name.innerHTML = u.name
               phone.innerHTML = u.phone
               ctime.innerHTML = u.ctime
               last.innerHTML = u.utime
               all.innerHTML = u.all
               rest.innerHTML = u.rest
-              console.log(u)
+              comment.innerHTML = u.comment
+              // console.log(u)
               this.students += 1
             }
           } else {

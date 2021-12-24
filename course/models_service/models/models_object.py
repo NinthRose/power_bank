@@ -19,7 +19,7 @@ def dict2power(d):
         return PD
     # student
     if key_lessons in d:
-        s = Student(d['name'], d['phone'])
+        s = Student(d['name'], d['phone'], d['comment'] if 'comment' in d else None)
         s.__dict__.update(d)
         lessons = d.pop(key_lessons)
         s.lessons = list()

@@ -29,13 +29,23 @@ class Lesson(MyClock):
 
 
 class Student(MyClock):
-    def __init__(self, name, phone):
+    def __init__(self, name, phone, comment=None):
         super().__init__()
         self.name = name if name else phone[-4:0]
         self.phone = phone
+        self.comment = comment
         self.lessons = list()
         self.all = 0
         self.rest = 0
+
+    def get_name(self):
+        return self.name
+
+    def update_info(self, name, comment):
+        if name:
+            self.name = name
+        if comment:
+            self.comment = comment
 
     def add_lesson(self, num):
         if num <= 0:
@@ -68,6 +78,7 @@ class Student(MyClock):
                 if recover:
                     lesson.refund = True
                 lesson.update()
+                self.update()
                 num -= 1
 
 
@@ -80,21 +91,21 @@ class PowerData(MyClock):
     def exist(self, phone):
         return phone in self.students.keys()
 
-    def register(self, name, phone):
+    def register(self, name, phone, comment):
         if self.exist(phone):
             raise Exception("{} registered".format(phone))
-        self.students[phone] = Student(name, phone)
+        self.students[phone] = Student(name, phone, comment)
 
     def get_student(self, phone) -> Student:
         try:
-            return self.students[phone]
+            return self.students.get(phone)
         except KeyError:
             raise Exception("{} not exists.".format(phone))
 
     def search_students(self, keyword):
         phones = self.students.keys()
         if keyword:
-            phones = [p for p in phones if keyword in p]
+            phones = [p for p in phones if keyword in p or keyword in self.students.get(p).get_name()]
         res = [self.students.get(p) for p in phones]
         res.reverse()
         return res
