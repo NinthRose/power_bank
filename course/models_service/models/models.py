@@ -114,12 +114,18 @@ class PowerData(MyClock):
     def register(self, name, phone, comment):
         if self.exist(phone):
             raise Exception("{} registered".format(phone))
-        self.students[phone] = Student(name, phone, comment)
+        student = Student(name, phone, comment)
+        student.id = len(self.students) + 1
+        self.students[phone] = student
 
     def get_student(self, phone) -> Student:
         try:
             return self.students[phone]
         except KeyError:
+            phone = int(phone)
+            for p, s in self.students.items():
+                if s.id == phone:
+                    return s
             raise Exception("{} not exists.".format(phone))
 
     def search_students(self, keyword):

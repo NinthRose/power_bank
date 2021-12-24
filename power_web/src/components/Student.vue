@@ -15,7 +15,7 @@
     <br/>
     <table frame="hsides" id="users" align="center">
       <tr>
-        <th>姓名</th> <th>手机号</th> <th>加入时间</th> <th>上次上课时间</th> <th>所有课程(私教课/正课/复习课)</th> <th>剩余课程(私教课/正课/复习课)</th> <th>备注</th>
+        <th>编号</th> <th>姓名</th> <th>手机号</th> <th>加入时间</th> <th>上次上课时间</th> <th>所有课程(私教课/正课/复习课)</th> <th>剩余课程(私教课/正课/复习课)</th> <th>备注</th>
       </tr>
     </table>
     <p>{{num}}</p>
@@ -91,6 +91,7 @@ export default {
             this.students = 0
             for (var u of users) {
               var line = userTable.insertRow(-1)
+              var id = line.insertCell(-1)
               var name = line.insertCell(-1)
               var phone = line.insertCell(-1)
               var ctime = line.insertCell(-1)
@@ -98,6 +99,7 @@ export default {
               var all = line.insertCell(-1)
               var rest = line.insertCell(-1)
               var comment = line.insertCell(-1)
+              id.innerHTML = u.id
               name.innerHTML = u.name
               phone.innerHTML = u.phone
               ctime.innerHTML = u.ctime

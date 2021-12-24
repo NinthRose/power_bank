@@ -1,6 +1,6 @@
 <template>
   <div class="lesson">
-    <input type="text" name="phone" placeholder="请输入手机号" v-model="phone">
+    <input type="text" name="phone" placeholder="请输入手机号或编号" v-model="phone">
     <input type="number" name="num" v-model="num" min="1" max="1000">
     <input type="radio" name="type" value="personal" v-model="type" />私教
     <input type="radio" name="type" value="lesson" v-model="type" />正课

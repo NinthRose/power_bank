@@ -9,7 +9,7 @@ def add(request):
     args = ['phone', 'num', 'type']
     phone, num, lesson_type = request_parser(request, args, is_post=True)
     num = param_int_checker(num, 'num')
-    phone, lesson_type = param_str_checker([phone, lesson_type], ['phone', 'type'])
+    phone, lesson_type = param_str_checker([phone, lesson_type], ["手机号码", "课程类型"])
     succeed = add_lesson(phone, num, lesson_type)
     if succeed:
         return success_response('充值课程成功')
@@ -21,8 +21,8 @@ def add(request):
 def update(request):
     args = ['phone', 'num', 'refund', 'type']
     phone, num, refund, lesson_type = request_parser(request, args, is_post=True)
-    phone, lesson_type = param_str_checker([phone, lesson_type], [args[0], args[-1]])
-    num = param_int_checker(num, args[1])
+    phone, lesson_type = param_str_checker([phone, lesson_type], ["手机号码", "课程类型"])
+    num = param_int_checker(num, "课程数量")
     if not isinstance(refund, bool):
         raise Exception("类型有误")
     update_lesson(phone, num, lesson_type, not refund, refund)
