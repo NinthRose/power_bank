@@ -11,7 +11,6 @@ from course.models_service.service.student_service import register_student, sear
 def register(request):
     args = ['name', 'phone', 'comment']
     name, phone, comment = request_parser(request, args, is_post=True)
-    name, phone, comment = param_str_checker([name, phone, comment], args)
     if not re.match('[0-9]{11,11}', phone):
         raise PowerBankParamException('手机号非法：{}'.format(phone))
     if not name:
@@ -25,7 +24,6 @@ def register(request):
 def update(request):
     args = ['name', 'phone', 'comment']
     name, phone, comment = request_parser(request, args, is_post=True)
-    name, phone, comment = param_str_checker([name, phone, comment], args)
     user = update_student(phone, name, comment)
     return success_response('重置用户信息成功', {'user': user})
 

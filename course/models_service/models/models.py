@@ -98,7 +98,7 @@ class PowerData(MyClock):
 
     def get_student(self, phone) -> Student:
         try:
-            return self.students.get(phone)
+            return self.students[phone]
         except KeyError:
             raise Exception("{} not exists.".format(phone))
 

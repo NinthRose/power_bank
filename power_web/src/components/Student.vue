@@ -1,6 +1,6 @@
 <template>
   <div class="student">
-    用户名：<input type="text" name="name" placeholder="请输入创建用户名" v-model="name">
+    用户名：<input type="text" name="name" placeholder="默认手机号码后四位" v-model="name">
     手机号：<input type="text" name="phone" placeholder="请输入手机号码" v-model="phone">
     备注：<input type="text" name="comment" placeholder="请输入备注信息" v-model="comment">
     <button @click="fRegister">创建用户</button>
@@ -37,7 +37,7 @@ export default {
   methods: {
     fRegister: function () {
       if (this.phone === '' || this.phone.length !== 11) {
-        alert('输入内容有误')
+        alert('输入号码有误')
         return
       }
       const data = { name: this.name, phone: this.phone, comment: this.comment }
@@ -49,7 +49,7 @@ export default {
     },
     fUpdate: function () {
       if (this.phone === '' || this.phone.length !== 11) {
-        alert('输入内容有误')
+        alert('输入号码有误')
         return
       }
       const data = { name: this.name, phone: this.phone, comment: this.comment }
